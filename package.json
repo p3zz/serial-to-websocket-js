@@ -1,0 +1,10 @@
+{
+  "name": "serial-to-websocket-js",
+  "version": "1.0.0",
+  "dependencies": {
+    "ws": "^7.4.5"
+  },
+  "devDependencies": {
+    "serialport": "^9.0.7"
+  }
+}
