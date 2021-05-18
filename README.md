@@ -1,6 +1,7 @@
 # Serial to websocket tool
 
-A NodeJS bridge between a serial device and a websocket server.
+A NodeJS bridge between a serial device and a websocket server. Everything arriving from the serial port will be
+redirected to the server and vice versa.
 
 ## Requirements
 
