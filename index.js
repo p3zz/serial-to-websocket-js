@@ -9,7 +9,10 @@ const server = new WebSocket.Server({
     port: PORT
 });
 
-let serialPort = new SerialPort(DEVICE, {baudRate: BAUDRATE, autoOpen: true});
+let serialPort = new SerialPort(DEVICE, {
+    baudRate: BAUDRATE,
+    autoOpen: true
+});
 
 serialPort.on("error", (err) => console.log(err.message));
 
@@ -17,25 +20,23 @@ serialPort.on("open", () => {
     console.log("Open serial communication with " + DEVICE);
 });
 
-let socketOut = null;
+let mySocket = null;
 
 server.on("connection", (socket) => {
-    console.log("Client connected at port " + PORT + "\n");
+    console.log("Client connected to port " + PORT + "\n");
 
-    socketOut = socket;
+    mySocket = socket;
 
-    socketOut.on('disconnect', () => console.log("Client disconnected from port " + PORT + '\n'));
+    mySocket.on('disconnect', () => console.log("Client disconnected from port " + PORT + '\n'));
 
-    socketOut.on("message", (msg) => {
-        process.stdout.write(msg);
+    mySocket.on("message", (msg) => {
         serialPort.write(msg);
     });
 });
 
 
 serialPort.on("data", (data) => {
-    process.stdout.write(data);
-    if (socketOut) {
-        socketOut.send(data.toString());
+    if (mySocket) {
+        mySocket.send(data.toString());
     }
 });
